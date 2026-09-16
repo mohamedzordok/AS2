@@ -1,3 +1,63 @@
-<Solution>
-  <Project Path="ConsoleApp1/ConsoleApp1.csproj" />
-</Solution>
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double[] prices = { 25.5, 40.0, 33.75 };
+        Console.WriteLine(prices[1]); // Q1
+
+        int[,] shelfCopies = { { 3, 5 }, { 1, 4 } };
+        Console.WriteLine(shelfCopies[1, 0]); // Q2
+
+        PrintWelcomeMessage(); // Q3
+        PrintBookTitle("Clean Code"); // Q4
+
+        int pagesQ5 = 400;
+        AddBonusPages(pagesQ5);
+        Console.WriteLine(pagesQ5); // Q5 -> 400 (بالـ value)
+
+        double[] pricesQ6 = { 25.5, 40.0 };
+        ApplyDiscount(pricesQ6);
+        Console.WriteLine(pricesQ6[0]); // Q6 -> 20.5 (array = reference)
+
+        int pagesQ7 = 400;
+        AddBonusPagesByRef(ref pagesQ7);
+        Console.WriteLine(pagesQ7); // Q7 -> 450 (بالـ ref)
+
+        double[] pricesQ8 = { 25.5, 40.0, 33.75 };
+        ReplaceArray(ref pricesQ8);
+        Console.WriteLine(pricesQ8.Length); // Q8 -> 3
+
+        double price;
+        bool found = TryGetPrice("Clean Code", out price);
+        if (found) Console.WriteLine(price); // Q9
+
+        PrintBookInfo("Clean Code"); // Q10
+        PrintBookInfo("Clean Code", 464); // Q10
+        PrintBookInfo(pages: 500, title: "The Pragmatic Programmer"); // Q11
+
+        PrintAllTitles("Clean Code", "The Pragmatic Programmer", "Refactoring"); // Q12
+    }
+
+    static void PrintWelcomeMessage() => Console.WriteLine("Welcome to the Library!");
+    static void PrintBookTitle(string title) => Console.WriteLine("Book title: " + title);
+    static void AddBonusPages(int pages) => pages += 50;
+    static void ApplyDiscount(double[] prices) => prices[0] -= 5;
+    static void AddBonusPagesByRef(ref int pages) => pages += 50;
+    static void ReplaceArray(ref double[] prices) => prices = new double[] { 10.0, 12.5, 15.0 };
+
+    static bool TryGetPrice(string title, out double price)
+    {
+        price = title == "Clean Code" ? 25.5 : 0;
+        return title == "Clean Code";
+    }
+
+    static void PrintBookInfo(string title, int pages = 300) =>
+        Console.WriteLine("Title: " + title + ", Pages: " + pages);
+
+    static void PrintAllTitles(params string[] titles)
+    {
+        foreach (string title in titles) Console.WriteLine(title);
+    }
+}
